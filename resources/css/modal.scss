@@ -1,0 +1,363 @@
+// Modal Component Styles
+// ========================
+
+// Variables
+$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+$border-radius: 15px;
+$border-radius-sm: 8px;
+$transition: all 0.3s ease;
+
+// Modal Container
+#serviceModal {
+    .modal-dialog {
+        margin: 1.75rem auto;
+
+        @media (min-width: 576px) {
+            max-width: 600px;
+        }
+    }
+
+    // Modal Content
+    .modal-content {
+        border-radius: $border-radius;
+        border: none;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        background: linear-gradient(135deg, #fd7151, #fdce59);
+        position: relative;
+    }
+
+
+    .modal-content::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+        animation: patternMove 30s linear infinite;
+    }
+
+    // Modal Header
+    .modal-header {
+        background: transparent !important;
+        color: white;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        padding: 1.25rem 1.5rem;
+
+        .modal-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-close {
+            filter: brightness(0) invert(1);
+            opacity: 0.8;
+            transition: $transition;
+
+            &:hover {
+                opacity: 1;
+                transform: rotate(90deg);
+            }
+        }
+    }
+
+    // Modal Body
+    .modal-body {
+        padding: 1.5rem;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+
+    }
+}
+
+// Form Styling
+#dynamicQuestions,
+#step2 {
+
+    // Form Labels
+    .form-label {
+        color: #2d3748;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        .text-danger {
+            color: #e53e3e;
+        }
+    }
+
+    // Input Fields
+    .form-control {
+        border: 2px solid #e2e8f0;
+        border-radius: $border-radius-sm;
+        padding: 12px 16px;
+        font-size: 0.95rem;
+        background: #fff;
+        transition: $transition;
+        color: #2d3748;
+
+        &::placeholder {
+            color: #a0aec0;
+            font-weight: 400;
+        }
+
+        &:hover {
+            border-color: #cbd5e0;
+        }
+
+        &:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+            outline: none;
+            background: #fff;
+        }
+
+        &:disabled {
+            background: #f7fafc;
+            cursor: not-allowed;
+        }
+
+        // Validation States
+        &.is-invalid {
+            border-color: #e53e3e;
+
+            &:focus {
+                box-shadow: 0 0 0 4px rgba(229, 62, 62, 0.15);
+            }
+        }
+
+        &.is-valid {
+            border-color: #38a169;
+
+            &:focus {
+                box-shadow: 0 0 0 4px rgba(56, 161, 105, 0.15);
+            }
+        }
+    }
+
+    // Select Dropdown
+    .form-select {
+        border: 2px solid #e2e8f0;
+        border-radius: $border-radius-sm;
+        padding: 12px 16px;
+        font-size: 0.95rem;
+        background-color: #fff;
+        transition: $transition;
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23667eea' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px 12px;
+
+        &:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
+
+        option {
+            padding: 10px;
+        }
+    }
+
+    // Textarea
+    textarea.form-control {
+        min-height: 100px;
+        resize: vertical;
+        line-height: 1.6;
+    }
+
+    // Form Group Spacing
+    .mb-3 {
+        margin-bottom: 1.25rem !important;
+    }
+
+    // Helper Text
+    small.text-muted {
+        font-size: 0.8rem;
+        color: #718096;
+        margin-top: 0.35rem;
+        display: block;
+    }
+
+    // Input Group (for icons)
+    .input-group {
+        .input-group-text {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-right: none;
+            border-radius: $border-radius-sm 0 0 $border-radius-sm;
+            color: #667eea;
+        }
+
+        .form-control {
+            border-left: none;
+            border-radius: 0 $border-radius-sm $border-radius-sm 0;
+
+            &:focus {
+                border-left: none;
+            }
+        }
+
+        &:focus-within {
+            .input-group-text {
+                border-color: #667eea;
+            }
+        }
+    }
+}
+
+// Step Sections
+#step1,
+#step2 {
+    animation: fadeIn 0.3s ease;
+
+    h6 {
+        color: #2d3748;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.25rem;
+    }
+}
+
+// Buttons
+#serviceModal {
+    .btn {
+        border-radius: $border-radius-sm;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: $transition;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+
+        i {
+            font-size: 1rem;
+        }
+    }
+
+    .btn-primary {
+        background: $primary-gradient;
+        border: none;
+        color: #fff;
+
+        &:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        &:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        &:disabled,
+        &.btn-disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none;
+            box-shadow: none;
+        }
+    }
+
+    .btn-success {
+        background: $success-gradient;
+        border: none;
+        color: #fff;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(17, 153, 142, 0.4);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    .btn-secondary {
+        background: #718096;
+        border: none;
+        color: #fff;
+
+        &:hover {
+            background: #4a5568;
+            transform: translateY(-2px);
+        }
+    }
+
+    // Button Group
+    .d-flex.gap-2 {
+        gap: 0.75rem !important;
+    }
+}
+
+// Loading State
+#dynamicQuestions {
+    .text-center {
+        padding: 2rem;
+        color: #718096;
+
+        &::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            animation: spin 0.8s linear infinite;
+        }
+    }
+}
+
+// Animations
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Responsive
+@media (max-width: 576px) {
+    #serviceModal {
+        .modal-body {
+            padding: 1rem;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            font-size: 0.9rem;
+        }
+    }
+
+    #dynamicQuestions,
+    #step2 {
+        .form-control {
+            padding: 10px 14px;
+        }
+    }
+}

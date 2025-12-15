@@ -1,0 +1,863 @@
+// Service Details Page SCSS - Matching services.index theme
+// Variables - Same as main theme
+$primary-color: #fd7151;
+$secondary-color: #fdce59;
+$success-color: #28a745;
+$warning-color: #ffc107;
+$info-color: #17a2b8;
+$light-color: #fafafa;
+$dark-color: #222;
+$text-color: #555;
+$border-color: #eee;
+$shadow-light: 0 4px 20px rgba(0, 0, 0, 0.08);
+$shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+$transition: all 0.3s ease;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin gradient-bg($color1, $color2) {
+  background: linear-gradient(135deg, $color1 0%, $color2 100%);
+}
+
+@mixin responsive-text($mobile, $tablet, $desktop) {
+  font-size: $mobile;
+  
+  @media (min-width: 576px) {
+    font-size: $tablet;
+  }
+  
+  @media (min-width: 992px) {
+    font-size: $desktop;
+  }
+}
+
+// Service Hero Section - Same as services.index
+.service-hero {
+  background: linear-gradient(135deg, #d9534f, #b94440);
+  color: #fff;
+  text-align: center;
+  padding: 140px 0 100px; // Extra top padding for sticky header
+  position: relative;
+  
+  .service-hero-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .service-main-title {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 15px;
+    
+    @media (max-width: 768px) {
+      font-size: 28px;
+    }
+    
+    span {
+      color: $secondary-color;
+    }
+  }
+  
+  .service-subtitle {
+    font-size: 18px;
+    opacity: 0.9;
+    max-width: 650px;
+    margin: 0 auto 35px;
+    line-height: 1.6;
+    
+    @media (max-width: 768px) {
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+  }
+  
+  // Breadcrumb in hero
+  .breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    
+    .breadcrumb-item {
+      font-size: 15px;
+      
+      a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: $transition;
+        
+        &:hover {
+          color: #fff;
+          text-decoration: underline;
+        }
+      }
+      
+      &.active {
+        color: $secondary-color;
+        font-weight: 500;
+      }
+      
+      + .breadcrumb-item::before {
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+  }
+}
+
+// Dark mode for service hero
+.dark-mode .service-hero {
+  background: linear-gradient(135deg, #04080a 0%, #14252b 50%, #1e3845 100%);
+}
+
+// Service Content Section - Matching theme
+.service-content-section {
+  padding: 80px 0;
+  background: #fff;
+  
+  .service-image-container {
+    position: relative;
+    margin-bottom: 2rem;
+    
+    img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 14px;
+      box-shadow: $shadow-light;
+      transition: $transition;
+      
+      @media (max-width: 768px) {
+        max-height: 300px;
+      }
+      
+      &:hover {
+        transform: scale(1.02);
+        box-shadow: $shadow-medium;
+      }
+    }
+  }
+  
+  .service-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 2rem;
+    
+    .badge {
+      background: $primary-color;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      
+      &.badge-success {
+        background: $success-color;
+      }
+      
+      &.badge-info {
+        background: $info-color;
+      }
+    }
+  }
+  
+  .service-actions {
+    margin-bottom: 3rem;
+    
+    .btn {
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-right: 15px;
+      margin-bottom: 10px;
+      transition: $transition;
+      
+      &.btn-primary {
+        background: $primary-color;
+        border: none;
+        
+        &:hover {
+          background: darken($primary-color, 10%);
+          transform: translateY(-2px);
+        }
+      }
+      
+      &.btn-outline-primary {
+        border: 2px solid $primary-color;
+        color: $primary-color;
+        
+        &:hover {
+          background: $primary-color;
+          color: #fff;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
+// Dark mode for service content
+.dark-mode .service-content-section {
+  background: transparent;
+  
+  .service-badges .badge {
+    background: rgba(253, 113, 81, 0.9);
+  }
+}
+
+// Service Details Section - Matching theme
+.service-details-section {
+  
+  background: $light-color;
+  
+  .section-title {
+    font-size: 34px;
+    font-weight: 700;
+    color: $primary-color;
+    margin-bottom: 2rem;
+    position: relative;
+    
+    @media (max-width: 768px) {
+      font-size: 28px;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: $primary-color;
+      border-radius: 2px;
+    }
+  }
+  
+  .service-description {
+    font-size: 16px;
+    line-height: 1.7;
+    color: $text-color;
+    margin-bottom: 3rem;
+    
+    p {
+      margin-bottom: 1.2rem;
+    }
+    
+    ul, ol {
+      padding-left: 1.5rem;
+      
+      li {
+        margin-bottom: 0.8rem;
+        color: $text-color;
+      }
+    }
+  }
+}
+
+// Dark mode for service details
+.dark-mode .service-details-section {
+  background: transparent;
+  
+  .service-description {
+    color: #d1e7dd;
+    
+    ul li, ol li {
+      color: #d1e7dd;
+    }
+  }
+}
+  
+// Service Features - Matching tech-section theme
+.service-features {
+  padding: 80px 0;
+  background: #fff;
+  
+  h3 {
+    font-size: 34px;
+    font-weight: 700;
+    color: $primary-color;
+    text-align: center;
+    margin-bottom: 3rem;
+    
+    @media (max-width: 768px) {
+      font-size: 28px;
+    }
+  }
+  
+  .feature-item {
+    background: #fff;
+    padding: 25px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: $shadow-light;
+    transition: $transition;
+    border: 1px solid $border-color;
+    height: auto;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    @media (max-width: 575px) {
+      padding: 20px;
+      min-height: 180px;
+    }
+    
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: $shadow-medium;
+      border-color: $primary-color;
+      
+      i {
+        transform: scale(1.15);
+        color: darken($primary-color, 10%);
+      }
+    }
+    
+    i {
+      font-size: 40px;
+      color: $primary-color;
+      margin-bottom: 1rem;
+      transition: $transition;
+      
+      @media (max-width: 575px) {
+        font-size: 35px;
+      }
+    }
+    
+    h5 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: $dark-color;
+      
+      @media (max-width: 575px) {
+        font-size: 18px;
+      }
+    }
+    
+    p {
+      color: $text-color;
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0;
+      
+      @media (max-width: 575px) {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// Dark mode for service features
+.dark-mode .service-features {
+  background: transparent;
+  
+  .feature-item {
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.2);
+    border-color: #333;
+    box-shadow: 0 4px 25px rgba(255, 255, 255, 0.05);
+    
+    p, h5 {
+      color: #e6e6e6;
+    }
+    
+    i {
+      color: $primary-color;
+    }
+    
+    &:hover {
+      border-color: $primary-color;
+      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.10);
+    }
+  }
+}
+  
+// Service Process - Matching why-section theme
+.service-process {
+  padding: 80px 0;
+  background: $light-color;
+  
+  h3 {
+    font-size: 34px;
+    font-weight: 700;
+    color: $primary-color;
+    text-align: center;
+    margin-bottom: 3rem;
+    
+    @media (max-width: 768px) {
+      font-size: 28px;
+    }
+  }
+  
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: #fff;
+    padding: 30px 20px;
+    border-radius: 14px;
+    border: 1px solid $border-color;
+    margin-bottom: 25px;
+    transition: $transition;
+    height: 100%;
+    
+    @media (max-width: 575px) {
+      padding: 25px 15px;
+    }
+    
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: $shadow-light;
+      
+      .step-number {
+        transform: scale(1.1);
+      }
+    }
+    
+    .step-number {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, $primary-color, darken($primary-color, 15%));
+      color: white;
+      border-radius: 50%;
+      @include flex-center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      transition: $transition;
+      box-shadow: $shadow-light;
+      
+      @media (max-width: 575px) {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+    }
+    
+    h5 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: $dark-color;
+      
+      @media (max-width: 575px) {
+        font-size: 16px;
+        margin-bottom: 0.8rem;
+      }
+    }
+    
+    p {
+      color: $text-color;
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0;
+      
+      @media (max-width: 575px) {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+// Dark mode for service process
+.dark-mode .service-process {
+  background: transparent;
+  
+  .process-step {
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.235);
+    border-color: #333;
+    
+    h5, p {
+      color: #e6e6e6;
+    }
+    
+    &:hover {
+      box-shadow: 0 4px 25px rgba(255, 255, 255, 0.05);
+    }
+  }
+}
+
+
+// Service Sidebar - Matching theme
+.service-sidebar {
+  position: sticky;
+  top: 100px;
+  .contact-card {
+    background: linear-gradient(135deg, $primary-color, darken($primary-color, 15%));
+    border-radius: 14px;
+    box-shadow: $shadow-medium;
+    position: relative;
+    overflow: hidden;
+    padding: 25px;
+    margin-bottom: 2rem;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      transform: rotate(45deg);
+    }
+    
+    h4 {
+      font-weight: 600;
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      margin-bottom: 1rem;
+      
+      @media (max-width: 575px) {
+        font-size: 1.25rem;
+      }
+    }
+    
+    p {
+      position: relative;
+      z-index: 2;
+      opacity: 0.9;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      
+      @media (max-width: 575px) {
+        font-size: 0.9rem;
+      }
+    }
+    
+    .contact-info {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 1.5rem;
+      
+      .d-flex {
+        margin-bottom: 0.75rem;
+        color: #fff;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        i {
+          opacity: 0.8;
+          margin-right: 0.5rem;
+        }
+        
+        span {
+          font-size: 0.9rem;
+          
+          @media (max-width: 575px) {
+            font-size: 0.85rem;
+          }
+        }
+      }
+    }
+    
+    .btn {
+      position: relative;
+      z-index: 2;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: $transition;
+      background: #fff;
+      color: $primary-color;
+      border: none;
+      padding: 12px 20px;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        background: #f8f9fa;
+      }
+    }
+  }
+  
+  .related-services {
+    h4 {
+      font-weight: 600;
+      color: $primary-color;
+      margin-bottom: 1.5rem;
+      font-size: 24px;
+      
+      @media (max-width: 575px) {
+        font-size: 20px;
+      }
+    }
+    
+    .related-service-item {
+      background: #fff;
+      padding: 15px;
+      border-radius: 14px;
+      box-shadow: $shadow-light;
+      transition: $transition;
+      border: 1px solid $border-color;
+      margin-bottom: 15px;
+      
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: $shadow-medium;
+        border-color: $primary-color;
+        
+        .related-service-img {
+          transform: scale(1.05);
+        }
+      }
+      
+      a {
+        color: inherit;
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: none;
+        }
+      }
+      
+      .related-service-img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: $transition;
+        
+        @media (max-width: 575px) {
+          width: 50px;
+          height: 50px;
+        }
+      }
+      
+      h6 {
+        font-weight: 600;
+        color: $dark-color;
+        font-size: 16px;
+        margin-bottom: 0.5rem;
+        
+        @media (max-width: 575px) {
+          font-size: 14px;
+        }
+      }
+      
+      p {
+        color: $text-color;
+        font-size: 14px;
+        line-height: 1.4;
+        margin: 0;
+        
+        @media (max-width: 575px) {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+
+// Dark mode for sidebar
+.dark-mode .service-sidebar {
+  .related-services {
+    .related-service-item {
+      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.2);
+      border-color: #333;
+      
+      h6, p {
+        color: #e6e6e6;
+      }
+      
+      &:hover {
+        border-color: $primary-color;
+        box-shadow: 0 4px 25px rgba(255, 255, 255, 0.05);
+      }
+    }
+  }
+}
+
+
+// Service CTA Section - Matching cta-subscribe-section theme
+.service-cta-section {
+  position: relative;
+  padding: 100px 0;
+  background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
+  color: #fff;
+  text-align: center;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 40px 0;
+  
+  .cta-overlay {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(2px);
+  }
+  
+  .cta-content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  h2 {
+    font-size: 38px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #fff;
+    
+    @media (max-width: 768px) {
+      font-size: 28px;
+    }
+  }
+  
+  p {
+    font-size: 17px;
+    opacity: 0.9;
+    margin-bottom: 25px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
+  }
+  
+  .cta-buttons {
+    .btn {
+      padding: 12px 28px;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: $transition;
+      margin: 0 10px 10px 0;
+      
+      @media (max-width: 575px) {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        display: block;
+        width: 100%;
+        margin: 0 0 10px 0;
+      }
+      
+      &.btn-primary {
+        background: #fff !important;
+        color: $primary-color;
+        border: none;
+        
+        &:hover {
+          background: #f8f9fa;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+      }
+      
+      &.btn-outline-primary {
+        border: 2px solid #fff;
+        color: #fff;
+        background: transparent;
+        
+        &:hover {
+          background: #fff;
+          color: $primary-color;
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
+// Dark mode for CTA section
+.dark-mode .service-cta-section {
+  background: linear-gradient(135deg, #04080a 0%, #14252b 50%, #1e3845 100%);
+}
+
+// Responsive Utilities
+@media (max-width: 991px) {
+  .service-sidebar {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .service-hero-section,
+  .service-details-section,
+  .service-cta-section {
+    .container-fluid {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  
+  .service-features,
+  .service-process {
+    .row {
+      margin-left: -0.5rem;
+      margin-right: -0.5rem;
+      
+      > * {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+    }
+  }
+}
+
+// Animation Classes
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// AOS Animation Overrides
+[data-aos="fade-up"] {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+[data-aos="zoom-in"] {
+  animation: zoomIn 0.6s ease-out;
+}
+
+[data-aos="fade-left"] {
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+// Print Styles
+@media print {
+  .service-hero-section,
+  .service-cta-section {
+    background: white !important;
+  }
+  
+  .contact-card {
+    background: #f8f9fa !important;
+    color: #333 !important;
+  }
+  
+  .btn {
+    display: none !important;
+  }
+}
