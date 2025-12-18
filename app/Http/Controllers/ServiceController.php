@@ -57,6 +57,16 @@ class ServiceController extends Controller
             'meta_title' => $validated['meta_title'] ?? null,
             'meta_description' => $validated['meta_description'] ?? null,
             'meta_keywords' => $validated['meta_keywords'] ?? null,
+            'basic_price' => $request->basic_price,
+            'standard_price' => $request->standard_price,
+            'premium_price' => $request->premium_price,
+            'basic_features' => $request->basic_features,
+            'standard_features' => $request->standard_features,
+            'premium_features' => $request->premium_features,
+            'basic_delivery' => $request->basic_delivery,
+            'standard_delivery' => $request->standard_delivery,
+            'premium_delivery' => $request->premium_delivery,
+            'show_pricing' => $request->has('show_pricing'),
         ]);
 
         return redirect()->route('services.index')
@@ -102,6 +112,16 @@ class ServiceController extends Controller
             'meta_title' => $validated['meta_title'] ?? null,
             'meta_description' => $validated['meta_description'] ?? null,
             'meta_keywords' => $validated['meta_keywords'] ?? null,
+            'basic_price' => $request->basic_price,
+            'standard_price' => $request->standard_price,
+            'premium_price' => $request->premium_price,
+            'basic_features' => $request->basic_features,
+            'standard_features' => $request->standard_features,
+            'premium_features' => $request->premium_features,
+            'basic_delivery' => $request->basic_delivery,
+            'standard_delivery' => $request->standard_delivery,
+            'premium_delivery' => $request->premium_delivery,
+            'show_pricing' => $request->has('show_pricing'),
         ]);
 
         return redirect()->route('services.index')
@@ -322,5 +342,16 @@ class ServiceController extends Controller
         return view('user.services.show', compact('service', 'relatedServices'));
     }
 
-    
+    // Pricing page
+    public function pricing()
+    {
+        $services = Service::where('show_pricing', true)
+            ->whereNotNull('basic_price')
+            ->orWhereNotNull('standard_price')
+            ->orWhereNotNull('premium_price')
+            ->latest()
+            ->get();
+
+        return view('user.pricing.index', compact('services'));
+    }
 }

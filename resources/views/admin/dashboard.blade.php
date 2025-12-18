@@ -144,6 +144,92 @@
         </div>
     </div>
 
+    <!-- Payment Stats Row -->
+    @php
+        $totalRevenue = \App\Models\Payment::where('status', 'paid')->sum('amount');
+        $todayRevenue = \App\Models\Payment::where('status', 'paid')->whereDate('created_at', today())->sum('amount');
+        $monthRevenue = \App\Models\Payment::where('status', 'paid')->whereMonth('created_at', now()->month)->sum('amount');
+        $totalPayments = \App\Models\Payment::where('status', 'paid')->count();
+        $pendingPayments = \App\Models\Payment::where('status', 'pending')->count();
+    @endphp
+    <div class="row">
+        <!-- Total Revenue Card -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{{ route('admin.payments.index') }}">
+                <div class="card border-left-success shadow h-100 py-2" style="border-left-color: #10b981 !important;">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1" style="color: #10b981;">
+                                    Total Revenue</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">₹{{ number_format($totalRevenue, 0) }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-rupee-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- This Month Revenue -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                This Month</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">₹{{ number_format($monthRevenue, 0) }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Today's Revenue -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Today's Revenue</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">₹{{ number_format($todayRevenue, 0) }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Successful Payments -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{{ route('admin.payments.index') }}">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Successful Payments</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalPayments }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
     <!-- Content Row -->
 
     <div class="row">

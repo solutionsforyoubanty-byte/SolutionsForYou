@@ -140,6 +140,7 @@
             @php
                 $unreadInquiries = \App\Models\ServiceInquiry::where('status', 'pending')->count();
                 $totalSubscribers = \App\Models\Subscriber::where('status', 'active')->count();
+                $newContacts = \App\Models\Contact::where('status', 'new')->count();
             @endphp
             <li class="nav-item {{ request()->routeIs('inquiries.*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('inquiries.index') }}">
@@ -147,6 +148,17 @@
                     <span>Service Inquiries</span>
                     @if($unreadInquiries > 0)
                         <span class="badge badge-danger badge-counter inquiry-notification">{{ $unreadInquiries }}</span>
+                    @endif
+                </a>
+            </li>
+
+            <!-- Nav Item - Contact Messages -->
+            <li class="nav-item {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.contacts.index') }}">
+                    <i class="fas fa-fw fa-comments"></i>
+                    <span>Contact Messages</span>
+                    @if($newContacts > 0)
+                        <span class="badge badge-primary badge-counter">{{ $newContacts }}</span>
                     @endif
                 </a>
             </li>
@@ -179,6 +191,29 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
+                Finance
+            </div>
+
+            <!-- Nav Item - Payments -->
+            @php
+                $pendingPayments = \App\Models\Payment::where('status', 'pending')->count();
+                $totalRevenue = \App\Models\Payment::where('status', 'paid')->sum('amount');
+            @endphp
+            <li class="nav-item {{ request()->routeIs('admin.payments.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.payments.index') }}">
+                    <i class="fas fa-fw fa-credit-card"></i>
+                    <span>Payments</span>
+                    @if($pendingPayments > 0)
+                        <span class="badge badge-warning badge-counter">{{ $pendingPayments }}</span>
+                    @endif
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
                 Website Management
             </div>
 
@@ -187,6 +222,14 @@
                 <a class="nav-link" href="{{ url('/') }}" target="_blank">
                     <i class="fas fa-fw fa-globe"></i>
                     <span>View Website</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Admin Management -->
+            <li class="nav-item {{ request()->routeIs('admin.admins.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.admins.index') }}">
+                    <i class="fas fa-fw fa-users-cog"></i>
+                    <span>Admin Management</span>
                 </a>
             </li>
 
@@ -302,12 +345,13 @@
                                     {{ Auth::guard('admin')->user()->name ?? 'Admin' }}
                                 </span>
                                 <img class="img-profile rounded-circle"
-                                    src="{{ asset('admin/admin-assets/img/undraw_profile.svg') }}">
+                                    src="{{ Auth::guard('admin')->user()->avatar_url }}"
+                                    style="width: 32px; height: 32px; object-fit: cover;">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('admin.profile') }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>

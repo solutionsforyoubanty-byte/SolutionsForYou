@@ -12,8 +12,35 @@ class Service extends Model
     
     protected $fillable = [
         'title','slug','image','short_description','description',
-        'meta_title','meta_description','meta_keywords'
+        'meta_title','meta_description','meta_keywords',
+        'basic_price','standard_price','premium_price',
+        'basic_features','standard_features','premium_features',
+        'basic_delivery','standard_delivery','premium_delivery',
+        'show_pricing'
     ];
+
+    protected $casts_pricing = [
+        'basic_price' => 'decimal:2',
+        'standard_price' => 'decimal:2',
+        'premium_price' => 'decimal:2',
+        'show_pricing' => 'boolean',
+    ];
+
+    // Get features as array
+    public function getBasicFeaturesArrayAttribute()
+    {
+        return $this->basic_features ? explode("\n", $this->basic_features) : [];
+    }
+
+    public function getStandardFeaturesArrayAttribute()
+    {
+        return $this->standard_features ? explode("\n", $this->standard_features) : [];
+    }
+
+    public function getPremiumFeaturesArrayAttribute()
+    {
+        return $this->premium_features ? explode("\n", $this->premium_features) : [];
+    }
 
     protected $casts = [
         'created_at' => 'datetime',

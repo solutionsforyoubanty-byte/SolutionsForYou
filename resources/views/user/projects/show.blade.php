@@ -46,7 +46,7 @@
             </div>
 
             <!-- Sidebar -->
-            <div class="col-lg-4">
+            <div class="col-lg-4 project-sticky">
                 <!-- Project Info Card -->
                 <div class="project-info-card card shadow-sm mb-4" data-aos="fade-left">
                     <div class="card-header bg-primary text-white">

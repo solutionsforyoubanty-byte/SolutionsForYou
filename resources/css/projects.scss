@@ -276,6 +276,11 @@
 }
 
 // Project Info Card
+.project-sticky {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
 .project-info-card {
     .project-meta-list {
         list-style: none;

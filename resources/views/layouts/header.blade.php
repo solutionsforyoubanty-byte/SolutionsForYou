@@ -41,8 +41,11 @@
         <li><a href="{{ route('user.services.index') }}" class="{{ request()->is('services*') ? 'active' : '' }}">
             <i class="bi bi-gear"></i> Services
         </a></li>
-        <li><a href="{{ route('user.blogs') }}" class="{{ request()->is('blogs*') ? 'active' : '' }}">
-            <i class="bi bi-blog"></i> Blogs
+        <li><a href="{{ route('user.pricing') }}" class="{{ request()->is('pricing*') ? 'active' : '' }}">
+            <i class="bi bi-tags"></i> Pricing
+        </a></li>
+        <li><a href="{{ route('user.blogs') }}" class="{{ request()->is('blog*') ? 'active' : '' }}">
+            <i class="bi bi-journal-text"></i> Blogs
         </a></li>
         <li><a href="{{ url('/#contact') }}" class="{{ request()->is('/#contact') ? 'active' : '' }}">
             <i class="bi bi-envelope"></i> Contact

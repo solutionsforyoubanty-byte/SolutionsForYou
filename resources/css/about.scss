@@ -1,0 +1,599 @@
+// ========================================
+// ABOUT PAGE STYLES
+// ========================================
+
+// Variables
+$primary: #FF6B6B;
+$primary-dark: #FFA500;
+$gradient: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+$dark: #1e293b;
+$gray: #64748b;
+$light-gray: #f8fafc;
+$white: #ffffff;
+
+// ========================================
+// HERO SECTION
+// ========================================
+.about-hero {
+    position: relative;
+    padding: 120px 0 80px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    overflow: hidden;
+
+    .hero-shapes .shape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.5;
+    }
+
+    .shape-1 {
+        width: 400px;
+        height: 400px;
+        background: $gradient;
+        top: -200px;
+        right: -100px;
+        filter: blur(80px);
+    }
+
+    .shape-2 {
+        width: 300px;
+        height: 300px;
+        background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+        bottom: -150px;
+        left: -100px;
+        filter: blur(60px);
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: $white;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+        color: $primary;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        margin-bottom: 20px;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        color: $dark;
+        margin-bottom: 20px;
+
+        span {
+            background: $gradient;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    }
+
+    .hero-desc {
+        font-size: 1.1rem;
+        color: $gray;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+// ========================================
+// STORY SECTION
+// ========================================
+.story-section {
+    padding: 80px 0;
+    background: $white;
+}
+
+.story-image {
+    position: relative;
+
+    img {
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+    }
+
+    .experience-badge {
+        position: absolute;
+        bottom: -20px;
+        right: -20px;
+        background: $gradient;
+        color: $white;
+        padding: 25px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 15px 40px rgba(255, 107, 107, 0.3);
+
+        .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        span {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+    }
+}
+
+.story-content {
+    .section-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        background: #fff1f1;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 600;
+        color: $primary;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: $dark;
+        margin-bottom: 20px;
+    }
+
+    p {
+        color: $gray;
+        line-height: 1.8;
+        margin-bottom: 15px;
+    }
+}
+
+// ========================================
+// STATS SECTION
+// ========================================
+.stats-section {
+    padding: 60px 0;
+    background: $gradient;
+}
+
+.stat-item {
+    text-align: center;
+    color: $white;
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 14px;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+}
+
+// ========================================
+// VALUES SECTION
+// ========================================
+.values-section {
+    padding: 80px 0;
+    background: $light-gray;
+
+    .section-title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: $dark;
+    }
+}
+
+.value-card {
+    background: $white;
+    padding: 35px 25px;
+    border-radius: 20px;
+    text-align: center;
+    height: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+
+        .value-icon {
+            background: $gradient;
+            color: $white;
+        }
+    }
+
+    .value-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: $primary;
+        transition: all 0.3s ease;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: $dark;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: $gray;
+        font-size: 14px;
+        margin: 0;
+    }
+}
+
+// ========================================
+// TEAM SECTION
+// ========================================
+.team-section {
+    padding: 80px 0;
+    background: $white;
+
+    .section-title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: $dark;
+    }
+}
+
+.team-card {
+    background: $white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+
+        .team-image img {
+            transform: scale(1.1);
+        }
+
+        .team-social {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .team-image {
+        position: relative;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+    }
+
+    .team-social {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 15px;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+
+        a {
+            width: 40px;
+            height: 40px;
+            background: $white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $dark;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: $primary;
+                color: $white;
+            }
+        }
+    }
+
+    .team-info {
+        padding: 25px;
+        text-align: center;
+
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: $dark;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: $primary;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 0;
+        }
+    }
+}
+
+// ========================================
+// WHY CHOOSE SECTION
+// ========================================
+.why-section {
+    padding: 80px 0;
+    background: $light-gray;
+
+    .section-title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: $dark;
+        margin-bottom: 30px;
+    }
+}
+
+.why-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+
+    .why-icon {
+        width: 60px;
+        height: 60px;
+        background: $gradient;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        i {
+            font-size: 24px;
+            color: $white;
+        }
+    }
+
+    h4 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: $dark;
+        margin-bottom: 5px;
+    }
+
+    p {
+        color: $gray;
+        font-size: 14px;
+        margin: 0;
+    }
+}
+
+// ========================================
+// CTA SECTION
+// ========================================
+.about-cta {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    position: relative;
+    overflow: hidden;
+
+    .cta-shapes .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 107, 107, 0.1);
+    }
+
+    .cta-shape-1 {
+        width: 300px;
+        height: 300px;
+        top: -150px;
+        right: 10%;
+    }
+
+    .cta-shape-2 {
+        width: 200px;
+        height: 200px;
+        bottom: -100px;
+        left: 5%;
+    }
+
+    .cta-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: $white;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    p {
+        font-size: 1.1rem;
+        opacity: 0.8;
+        max-width: 500px;
+        margin: 0 auto 30px;
+    }
+
+    .btn-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 32px;
+        background: $gradient;
+        color: $white;
+        border-radius: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+            color: $white;
+        }
+    }
+}
+
+// ========================================
+// DARK MODE
+// ========================================
+@media (prefers-color-scheme: dark) {
+    $dark-bg: #0f172a;
+    $dark-card: #1e293b;
+    $dark-text: #e2e8f0;
+    $dark-text-muted: #94a3b8;
+
+    .about-hero {
+        background: linear-gradient(135deg, $dark-bg 0%, $dark-card 100%);
+
+        .hero-badge {
+            background: $dark-card;
+        }
+
+        .hero-title {
+            color: $dark-text;
+        }
+
+        .hero-desc {
+            color: $dark-text-muted;
+        }
+    }
+
+    .story-section {
+        background: $dark-bg;
+    }
+
+    .story-content {
+        h2 {
+            color: $dark-text;
+        }
+
+        p {
+            color: $dark-text-muted;
+        }
+    }
+
+    .values-section,
+    .why-section {
+        background: $dark-card;
+
+        .section-title {
+            color: $dark-text;
+        }
+    }
+
+    .value-card {
+        background: $dark-bg;
+
+        h4 {
+            color: $dark-text;
+        }
+
+        p {
+            color: $dark-text-muted;
+        }
+    }
+
+    .team-section {
+        background: $dark-bg;
+
+        .section-title {
+            color: $dark-text;
+        }
+    }
+
+    .team-card {
+        background: $dark-card;
+
+        .team-info {
+            h4 {
+                color: $dark-text;
+            }
+        }
+    }
+
+    .why-item {
+        h4 {
+            color: $dark-text;
+        }
+
+        p {
+            color: $dark-text-muted;
+        }
+    }
+}
+
+// ========================================
+// RESPONSIVE
+// ========================================
+@media (max-width: 991px) {
+    .about-hero .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .story-image .experience-badge {
+        right: 0;
+    }
+}
+
+@media (max-width: 767px) {
+    .about-hero {
+        padding: 80px 0 60px;
+
+        .hero-title {
+            font-size: 2rem;
+        }
+    }
+
+    .story-section,
+    .values-section,
+    .team-section,
+    .why-section {
+        padding: 60px 0;
+    }
+
+    .story-image {
+        margin-bottom: 60px;
+    }
+
+    .stat-item {
+        margin-bottom: 30px;
+
+        .stat-number {
+            font-size: 2.5rem;
+        }
+    }
+
+    .about-cta {
+        padding: 60px 0;
+
+        h2 {
+            font-size: 1.75rem;
+        }
+    }
+
+    .story-content h2,
+    .values-section .section-title,
+    .team-section .section-title,
+    .why-section .section-title {
+        font-size: 1.75rem;
+    }
+}

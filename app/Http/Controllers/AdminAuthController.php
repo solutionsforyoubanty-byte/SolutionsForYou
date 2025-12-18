@@ -30,8 +30,16 @@ class AdminAuthController extends Controller
             return back()->with('toast_error', 'Invalid login details!');
         }
 
+        // Check if admin is active
+        if (!$admin->is_active) {
+            return back()->with('toast_error', 'Your account has been deactivated!');
+        }
+
         // Login admin
         Auth::guard('admin')->login($admin);
+
+        // Update last login time
+        $admin->update(['last_login_at' => now()]);
 
         // Redirect to dashboard with toast
         return redirect()

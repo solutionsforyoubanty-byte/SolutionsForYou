@@ -44,6 +44,67 @@
                         <label>Meta Keywords</label>
                         <input type="text" name="meta_keywords" class="form-control">
 
+                        <hr class="my-4">
+                        <h4><i class="fas fa-tags"></i> Pricing Plans</h4>
+                        
+                        <div class="form-check mb-3">
+                            <input type="checkbox" name="show_pricing" value="1" class="form-check-input" id="showPricing" checked>
+                            <label class="form-check-label" for="showPricing">Show on Pricing Page</label>
+                        </div>
+
+                        <div class="row">
+                            <!-- Basic Plan -->
+                            <div class="col-md-4">
+                                <div class="card border-primary mb-3">
+                                    <div class="card-header bg-primary text-white">Basic Plan</div>
+                                    <div class="card-body">
+                                        <label>Price (₹)</label>
+                                        <input type="number" name="basic_price" class="form-control" step="0.01" placeholder="e.g., 4999">
+                                        
+                                        <label class="mt-2">Delivery Time</label>
+                                        <input type="text" name="basic_delivery" class="form-control" placeholder="e.g., 3-5 Days">
+                                        
+                                        <label class="mt-2">Features (one per line)</label>
+                                        <textarea name="basic_features" class="form-control" rows="5" placeholder="Feature 1&#10;Feature 2&#10;Feature 3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Standard Plan -->
+                            <div class="col-md-4">
+                                <div class="card border-success mb-3">
+                                    <div class="card-header bg-success text-white">Standard Plan</div>
+                                    <div class="card-body">
+                                        <label>Price (₹)</label>
+                                        <input type="number" name="standard_price" class="form-control" step="0.01" placeholder="e.g., 9999">
+                                        
+                                        <label class="mt-2">Delivery Time</label>
+                                        <input type="text" name="standard_delivery" class="form-control" placeholder="e.g., 5-7 Days">
+                                        
+                                        <label class="mt-2">Features (one per line)</label>
+                                        <textarea name="standard_features" class="form-control" rows="5" placeholder="Feature 1&#10;Feature 2&#10;Feature 3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Premium Plan -->
+                            <div class="col-md-4">
+                                <div class="card border-warning mb-3">
+                                    <div class="card-header bg-warning text-dark">Premium Plan</div>
+                                    <div class="card-body">
+                                        <label>Price (₹)</label>
+                                        <input type="number" name="premium_price" class="form-control" step="0.01" placeholder="e.g., 19999">
+                                        
+                                        <label class="mt-2">Delivery Time</label>
+                                        <input type="text" name="premium_delivery" class="form-control" placeholder="e.g., 7-10 Days">
+                                        
+                                        <label class="mt-2">Features (one per line)</label>
+                                        <textarea name="premium_features" class="form-control" rows="5" placeholder="Feature 1&#10;Feature 2&#10;Feature 3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <button class="btn btn-primary mt-3">Save Service</button>
                     </form>
 
