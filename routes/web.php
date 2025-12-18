@@ -16,6 +16,9 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Admin\CareerController as AdminCareerController;
+use App\Http\Controllers\PageController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -23,12 +26,30 @@ Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/category/{slug}', [ShopController::class, 'category'])->name('shop.category');
 
+// Static Pages
+Route::get('/contact', [PageController::class, 'contact'])->name('pages.contact');
+Route::post('/contact', [PageController::class, 'submitContact'])->name('pages.contact.submit');
+Route::get('/about', [PageController::class, 'about'])->name('pages.about');
+Route::get('/careers', [PageController::class, 'careers'])->name('pages.careers');
+Route::get('/careers/{career}', [PageController::class, 'careerShow'])->name('pages.careers.show');
+Route::post('/careers/{career}/apply', [PageController::class, 'applyJob'])->name('pages.careers.apply');
+Route::get('/payments', [PageController::class, 'payments'])->name('pages.payments');
+Route::get('/shipping', [PageController::class, 'shipping'])->name('pages.shipping');
+Route::get('/returns', [PageController::class, 'returns'])->name('pages.returns');
+Route::get('/return-policy', [PageController::class, 'returnPolicy'])->name('pages.return-policy');
+Route::get('/terms', [PageController::class, 'terms'])->name('pages.terms');
+Route::get('/privacy', [PageController::class, 'privacy'])->name('pages.privacy');
+
 // Auth Routes
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
+    
+    // Google OAuth
+    Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
@@ -85,4 +106,18 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::patch('/settings', [SettingController::class, 'update'])->name('settings.update');
+
+    // Contacts
+    Route::get('/contacts', [AdminContactController::class, 'index'])->name('contacts.index');
+    Route::get('/contacts/{contact}', [AdminContactController::class, 'show'])->name('contacts.show');
+    Route::post('/contacts/{contact}/reply', [AdminContactController::class, 'reply'])->name('contacts.reply');
+    Route::patch('/contacts/{contact}/status', [AdminContactController::class, 'updateStatus'])->name('contacts.status');
+    Route::delete('/contacts/{contact}', [AdminContactController::class, 'destroy'])->name('contacts.destroy');
+
+    // Careers
+    Route::resource('careers', AdminCareerController::class)->except(['show']);
+    Route::get('/careers/applications', [AdminCareerController::class, 'applications'])->name('careers.applications');
+    Route::get('/careers/applications/{application}', [AdminCareerController::class, 'showApplication'])->name('careers.applications.show');
+    Route::patch('/careers/applications/{application}/status', [AdminCareerController::class, 'updateApplicationStatus'])->name('careers.applications.status');
+    Route::delete('/careers/applications/{application}', [AdminCareerController::class, 'destroyApplication'])->name('careers.applications.destroy');
 });

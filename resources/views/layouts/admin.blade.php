@@ -37,6 +37,20 @@
                 <a href="{{ route('admin.settings.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white {{ request()->routeIs('admin.settings.*') ? 'bg-gray-800 text-white' : '' }}">
                     <i class="fas fa-cog w-5"></i> Settings
                 </a>
+                <a href="{{ route('admin.contacts.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white {{ request()->routeIs('admin.contacts.*') ? 'bg-gray-800 text-white' : '' }}">
+                    <i class="fas fa-envelope w-5"></i> Contacts
+                    @php $newContacts = \App\Models\Contact::where('status', 'new')->count(); @endphp
+                    @if($newContacts > 0)
+                        <span class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">{{ $newContacts }}</span>
+                    @endif
+                </a>
+                <a href="{{ route('admin.careers.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-300 hover:bg-gray-800 hover:text-white {{ request()->routeIs('admin.careers.*') ? 'bg-gray-800 text-white' : '' }}">
+                    <i class="fas fa-briefcase w-5"></i> Careers
+                    @php $newApps = \App\Models\JobApplication::where('status', 'new')->count(); @endphp
+                    @if($newApps > 0)
+                        <span class="ml-auto bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">{{ $newApps }}</span>
+                    @endif
+                </a>
                 
                 <hr class="my-4 border-gray-700">
                 

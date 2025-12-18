@@ -64,4 +64,42 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
+
+    // Google OAuth
+    public function redirectToGoogle()
+    {
+        return \Laravel\Socialite\Facades\Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = \Laravel\Socialite\Facades\Socialite::driver('google')->stateless()->user();
+            
+            $user = User::where('email', $googleUser->getEmail())->first();
+            
+            if ($user) {
+                // Update google_id if not set
+                if (!$user->google_id) {
+                    $user->update(['google_id' => $googleUser->getId()]);
+                }
+            } else {
+                // Create new user
+                $user = User::create([
+                    'name' => $googleUser->getName(),
+                    'email' => $googleUser->getEmail(),
+                    'google_id' => $googleUser->getId(),
+                    'password' => Hash::make(uniqid()),
+                    'role' => 'user',
+                ]);
+            }
+            
+            Auth::login($user);
+            return redirect('/')->with('success', 'Logged in with Google!');
+            
+        } catch (\Exception $e) {
+            \Log::error('Google Login Error: ' . $e->getMessage());
+            return redirect('/login')->with('error', 'Google login failed: ' . $e->getMessage());
+        }
+    }
 }

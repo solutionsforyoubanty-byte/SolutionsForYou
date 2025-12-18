@@ -6,8 +6,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="theme-color" content="#2874f0">
     <title>@yield('title', 'E-Shop - Online Shopping')</title>
+    
+    <!-- Google Fonts - Inter (Professional E-commerce Font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -16,23 +24,43 @@
                         primary: '#2874f0',
                         secondary: '#fb641b',
                         dark: '#212121',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        'display': ['Poppins', 'Inter', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
     <style>
+        * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        h1, h2, h3, .font-display { font-family: 'Poppins', 'Inter', sans-serif; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
-        body { -webkit-tap-highlight-color: transparent; }
+        body { -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         @media (max-width: 768px) {
             .mobile-menu-open { overflow: hidden; }
         }
+        .swiper-button-next, .swiper-button-prev {
+            background: white;
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 14px !important;
+            color: #333;
+            font-weight: bold;
+        }
+        /* Price styling */
+        .price-tag { font-feature-settings: 'tnum' on, 'lnum' on; }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="bg-gray-100 min-h-screen flex flex-col font-sans antialiased">
     <!-- Mobile Header -->
     <header class="bg-primary sticky top-0 z-50">
         <div class="px-3 md:px-4 lg:max-w-7xl lg:mx-auto">
@@ -50,7 +78,7 @@
                     </span>
                 </a>
 
-                <!-- Search Bar - Hidden on mobile, shown in separate row -->
+                <!-- Search Bar -->
                 <form action="{{ route('shop.index') }}" method="GET" class="hidden md:flex flex-1 max-w-xl">
                     <div class="relative w-full">
                         <input type="text" name="search" value="{{ request('search') }}" 
@@ -252,25 +280,25 @@
                 <div>
                     <h4 class="text-gray-300 text-xs font-medium mb-3 md:mb-4">ABOUT</h4>
                     <ul class="space-y-2 text-xs">
-                        <li><a href="#" class="hover:text-white">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-white">About Us</a></li>
-                        <li><a href="#" class="hover:text-white">Careers</a></li>
+                        <li><a href="{{ route('pages.contact') }}" class="hover:text-white">Contact Us</a></li>
+                        <li><a href="{{ route('pages.about') }}" class="hover:text-white">About Us</a></li>
+                        <li><a href="{{ route('pages.careers') }}" class="hover:text-white">Careers</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-gray-300 text-xs font-medium mb-3 md:mb-4">HELP</h4>
                     <ul class="space-y-2 text-xs">
-                        <li><a href="#" class="hover:text-white">Payments</a></li>
-                        <li><a href="#" class="hover:text-white">Shipping</a></li>
-                        <li><a href="#" class="hover:text-white">Returns</a></li>
+                        <li><a href="{{ route('pages.payments') }}" class="hover:text-white">Payments</a></li>
+                        <li><a href="{{ route('pages.shipping') }}" class="hover:text-white">Shipping</a></li>
+                        <li><a href="{{ route('pages.returns') }}" class="hover:text-white">Returns</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-gray-300 text-xs font-medium mb-3 md:mb-4">POLICY</h4>
                     <ul class="space-y-2 text-xs">
-                        <li><a href="#" class="hover:text-white">Return Policy</a></li>
-                        <li><a href="#" class="hover:text-white">Terms Of Use</a></li>
-                        <li><a href="#" class="hover:text-white">Privacy</a></li>
+                        <li><a href="{{ route('pages.return-policy') }}" class="hover:text-white">Return Policy</a></li>
+                        <li><a href="{{ route('pages.terms') }}" class="hover:text-white">Terms Of Use</a></li>
+                        <li><a href="{{ route('pages.privacy') }}" class="hover:text-white">Privacy</a></li>
                     </ul>
                 </div>
                 <div>
@@ -283,7 +311,7 @@
                 </div>
             </div>
             <hr class="border-gray-700 my-6 md:my-8">
-            
+
             <!-- Payment Methods - Mobile -->
             <div class="md:hidden mb-4">
                 <p class="text-gray-500 text-[10px] text-center mb-2">Payment Methods</p>
@@ -347,7 +375,7 @@
             </a>
         </div>
     </div>
-    <div class="md:hidden h-16"></div> <!-- Spacer for bottom nav -->
+    <div class="md:hidden h-16"></div>
     @endauth
 
     <script>

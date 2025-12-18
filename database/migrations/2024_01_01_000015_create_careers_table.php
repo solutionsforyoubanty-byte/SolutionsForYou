@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('careers', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->string('department');
+            $table->string('location');
+            $table->enum('type', ['Full-time', 'Part-time', 'Contract', 'Internship'])->default('Full-time');
+            $table->text('description');
+            $table->text('requirements');
+            $table->string('salary_range')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
+
+        Schema::create('job_applications', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('career_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('resume')->nullable();
+            $table->text('cover_letter')->nullable();
+            $table->enum('status', ['new', 'reviewing', 'shortlisted', 'rejected', 'hired'])->default('new');
+            $table->text('admin_notes')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('job_applications');
+        Schema::dropIfExists('careers');
+    }
+};
