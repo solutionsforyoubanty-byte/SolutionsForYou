@@ -103,6 +103,54 @@ class ShopController extends Controller
         return view('shop.show', compact('product', 'related'));
     }
 
+    public function searchSuggestions(Request $request)
+    {
+        $query = $request->get('q', '');
+        
+        if (strlen($query) < 2) {
+            return response()->json([]);
+        }
+
+        $products = Product::active()
+            ->where(function($q) use ($query) {
+                $q->where('name', 'like', '%' . $query . '%')
+                  ->orWhere('brand', 'like', '%' . $query . '%');
+            })
+            ->select('id', 'name', 'slug', 'image', 'price', 'sale_price', 'brand')
+            ->take(8)
+            ->get()
+            ->map(function($product) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'slug' => $product->slug,
+                    'image' => $product->image ? asset('storage/' . $product->image) : null,
+                    'price' => $product->sale_price ?? $product->price,
+                    'brand' => $product->brand,
+                ];
+            });
+
+        $categories = Category::where('is_active', true)
+            ->where('name', 'like', '%' . $query . '%')
+            ->select('id', 'name', 'slug', 'image')
+            ->take(3)
+            ->get()
+            ->map(function($cat) {
+                return [
+                    'id' => $cat->id,
+                    'name' => $cat->name,
+                    'slug' => $cat->slug,
+                    'image' => $cat->image ? asset('storage/' . $cat->image) : null,
+                    'type' => 'category',
+                ];
+            });
+
+        return response()->json([
+            'products' => $products,
+            'categories' => $categories,
+        ]);
+    }
+
     public function category($slug)
     {
         $category = Category::where('slug', $slug)->where('is_active', true)->firstOrFail();

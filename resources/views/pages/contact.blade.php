@@ -3,7 +3,6 @@
 
 @section('content')
 <div class="bg-gray-50 min-h-screen">
-    <!-- Hero -->
     <div class="bg-gradient-to-r from-primary to-blue-600 text-white py-12 md:py-16">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <h1 class="text-3xl md:text-4xl font-bold font-display">Contact Us</h1>
@@ -13,7 +12,6 @@
 
     <div class="max-w-7xl mx-auto px-4 py-8 md:py-12">
         <div class="grid md:grid-cols-3 gap-6 mb-12">
-            <!-- Call -->
             <div class="bg-white rounded-xl shadow-sm p-6 text-center hover:shadow-lg transition">
                 <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-phone text-2xl text-primary"></i>
@@ -22,7 +20,6 @@
                 <p class="text-gray-500 mt-2">1800-123-4567</p>
                 <p class="text-sm text-gray-400">Mon-Sun: 9AM - 9PM</p>
             </div>
-            <!-- Email -->
             <div class="bg-white rounded-xl shadow-sm p-6 text-center hover:shadow-lg transition">
                 <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-envelope text-2xl text-green-600"></i>
@@ -31,7 +28,6 @@
                 <p class="text-gray-500 mt-2">support@eshop.com</p>
                 <p class="text-sm text-gray-400">Response within 24 hours</p>
             </div>
-            <!-- Chat -->
             <div class="bg-white rounded-xl shadow-sm p-6 text-center hover:shadow-lg transition">
                 <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-comments text-2xl text-purple-600"></i>
@@ -42,18 +38,37 @@
             </div>
         </div>
 
-        <!-- Contact Form -->
         <div class="grid md:grid-cols-2 gap-8">
             <div class="bg-white rounded-xl shadow-sm p-6 md:p-8">
                 <h2 class="text-xl font-bold mb-6">Send us a Message</h2>
-                <form>
+                
+                @if(session('success'))
+                <div class="bg-green-50 border-l-4 border-green-500 text-green-700 px-4 py-3 rounded mb-6">
+                    <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
+                </div>
+                @endif
+
+                <form action="{{ route('pages.contact.submit') }}" method="POST">
+                    @csrf
                     <div class="grid md:grid-cols-2 gap-4 mb-4">
-                        <input type="text" placeholder="Your Name" class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-primary focus:outline-none">
-                        <input type="email" placeholder="Your Email" class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-primary focus:outline-none">
+                        <div>
+                            <input type="text" name="name" value="{{ old('name') }}" placeholder="Your Name *" class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-primary focus:outline-none" required>
+                            @error('name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <input type="email" name="email" value="{{ old('email') }}" placeholder="Your Email *" class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-primary focus:outline-none" required>
+                            @error('email') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                        </div>
                     </div>
-                    <input type="text" placeholder="Subject" class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 mb-4 focus:border-primary focus:outline-none">
-                    <textarea rows="5" placeholder="Your Message" class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 mb-4 focus:border-primary focus:outline-none resize-none"></textarea>
-                    <button class="w-full bg-primary hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition">
+                    <div class="mb-4">
+                        <input type="text" name="subject" value="{{ old('subject') }}" placeholder="Subject *" class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-primary focus:outline-none" required>
+                        @error('subject') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                    </div>
+                    <div class="mb-4">
+                        <textarea name="message" rows="5" placeholder="Your Message *" class="w-full border-2 border-gray-200 rounded-lg px-4 py-3 focus:border-primary focus:outline-none resize-none" required>{{ old('message') }}</textarea>
+                        @error('message') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                    </div>
+                    <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition">
                         <i class="fas fa-paper-plane mr-2"></i> Send Message
                     </button>
                 </form>

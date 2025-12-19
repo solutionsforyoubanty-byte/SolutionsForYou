@@ -58,9 +58,108 @@
         }
         /* Price styling */
         .price-tag { font-feature-settings: 'tnum' on, 'lnum' on; }
+        
+        /* Preloader Styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2874f0 0%, #1a5dc8 100%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .preloader-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            font-style: italic;
+            margin-bottom: 30px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .preloader-spinner {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+        .preloader-spinner::before,
+        .preloader-spinner::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+        }
+        .preloader-spinner::before {
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(255,255,255,0.2);
+            border-top-color: #fb641b;
+            animation: spin 1s linear infinite;
+        }
+        .preloader-spinner::after {
+            width: 30px;
+            height: 30px;
+            top: 10px;
+            left: 10px;
+            border: 3px solid rgba(255,255,255,0.2);
+            border-top-color: #ffe500;
+            animation: spin 0.6s linear infinite reverse;
+        }
+        .preloader-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 25px;
+        }
+        .preloader-dots span {
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            animation: bounce 1.4s ease-in-out infinite;
+        }
+        .preloader-dots span:nth-child(1) { animation-delay: 0s; }
+        .preloader-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .preloader-dots span:nth-child(3) { animation-delay: 0.4s; }
+        .preloader-text {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0.6); background: rgba(255,255,255,0.4); }
+            40% { transform: scale(1); background: #fb641b; }
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col font-sans antialiased">
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">E-Shop</div>
+        <div class="preloader-spinner"></div>
+        <div class="preloader-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="preloader-text">LOADING</div>
+    </div>
+
     <!-- Mobile Header -->
     <header class="bg-primary sticky top-0 z-50">
         <div class="px-3 md:px-4 lg:max-w-7xl lg:mx-auto">
@@ -78,15 +177,19 @@
                     </span>
                 </a>
 
-                <!-- Search Bar -->
+                <!-- Search Bar with Suggestions -->
                 <form action="{{ route('shop.index') }}" method="GET" class="hidden md:flex flex-1 max-w-xl">
-                    <div class="relative w-full">
-                        <input type="text" name="search" value="{{ request('search') }}" 
+                    <div class="relative w-full" id="desktopSearchContainer">
+                        <input type="text" name="search" id="desktopSearchInput" value="{{ request('search') }}" 
                             placeholder="Search for products, brands and more" 
+                            autocomplete="off"
                             class="w-full py-2.5 pl-4 pr-12 rounded-sm text-sm focus:outline-none">
                         <button type="submit" class="absolute right-0 top-0 h-full px-4 text-primary">
                             <i class="fas fa-search"></i>
                         </button>
+                        <!-- Search Suggestions Dropdown -->
+                        <div id="desktopSearchSuggestions" class="absolute top-full left-0 right-0 bg-white shadow-xl rounded-b-lg z-50 hidden max-h-96 overflow-y-auto">
+                        </div>
                     </div>
                 </form>
 
@@ -146,14 +249,18 @@
                 </nav>
             </div>
 
-            <!-- Mobile Search Bar -->
+            <!-- Mobile Search Bar with Suggestions -->
             <div class="md:hidden pb-2">
                 <form action="{{ route('shop.index') }}" method="GET">
-                    <div class="relative">
-                        <input type="text" name="search" value="{{ request('search') }}" 
+                    <div class="relative" id="mobileSearchContainer">
+                        <input type="text" name="search" id="mobileSearchInput" value="{{ request('search') }}" 
                             placeholder="Search products..." 
+                            autocomplete="off"
                             class="w-full py-2 pl-10 pr-4 rounded text-sm focus:outline-none">
                         <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <!-- Mobile Search Suggestions -->
+                        <div id="mobileSearchSuggestions" class="absolute top-full left-0 right-0 bg-white shadow-xl rounded-b-lg z-50 hidden max-h-80 overflow-y-auto">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -410,6 +517,116 @@
             });
         });
     }
+
+    // Live Search Suggestions
+    let searchTimeout;
+    const searchUrl = '{{ route("search.suggestions") }}';
+
+    function initSearch(inputId, suggestionsId) {
+        const input = document.getElementById(inputId);
+        const suggestions = document.getElementById(suggestionsId);
+        
+        if (!input || !suggestions) return;
+
+        input.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const query = this.value.trim();
+            
+            if (query.length < 2) {
+                suggestions.classList.add('hidden');
+                suggestions.innerHTML = '';
+                return;
+            }
+
+            searchTimeout = setTimeout(() => {
+                fetch(`${searchUrl}?q=${encodeURIComponent(query)}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        renderSuggestions(data, suggestions, query);
+                    });
+            }, 300);
+        });
+
+        input.addEventListener('focus', function() {
+            if (this.value.trim().length >= 2 && suggestions.innerHTML) {
+                suggestions.classList.remove('hidden');
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!input.contains(e.target) && !suggestions.contains(e.target)) {
+                suggestions.classList.add('hidden');
+            }
+        });
+    }
+
+    function renderSuggestions(data, container, query) {
+        let html = '';
+
+        if (data.categories && data.categories.length > 0) {
+            html += '<div class="px-3 py-2 bg-gray-50 text-xs text-gray-500 font-medium">Categories</div>';
+            data.categories.forEach(cat => {
+                html += `
+                    <a href="/category/${cat.slug}" class="flex items-center gap-3 px-3 py-2 hover:bg-gray-50 border-b border-gray-100">
+                        <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                            ${cat.image ? `<img src="${cat.image}" class="w-8 h-8 rounded-full object-cover">` : '<i class="fas fa-tag text-gray-400 text-xs"></i>'}
+                        </div>
+                        <span class="text-sm">${highlightMatch(cat.name, query)}</span>
+                        <i class="fas fa-chevron-right text-gray-300 text-xs ml-auto"></i>
+                    </a>
+                `;
+            });
+        }
+
+        if (data.products && data.products.length > 0) {
+            html += '<div class="px-3 py-2 bg-gray-50 text-xs text-gray-500 font-medium">Products</div>';
+            data.products.forEach(product => {
+                const price = new Intl.NumberFormat('en-IN').format(product.price);
+                html += `
+                    <a href="/shop/${product.slug}" class="flex items-center gap-3 px-3 py-2 hover:bg-gray-50 border-b border-gray-100">
+                        <div class="w-10 h-10 bg-gray-100 rounded flex-shrink-0 overflow-hidden">
+                            ${product.image ? `<img src="${product.image}" class="w-full h-full object-cover">` : '<div class="w-full h-full flex items-center justify-center"><i class="fas fa-image text-gray-300"></i></div>'}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm truncate">${highlightMatch(product.name, query)}</p>
+                            <p class="text-xs text-gray-400">${product.brand || ''}</p>
+                        </div>
+                        <span class="text-sm font-medium text-primary">₹${price}</span>
+                    </a>
+                `;
+            });
+        }
+
+        if (!html) {
+            html = '<div class="px-4 py-6 text-center text-gray-400 text-sm"><i class="fas fa-search mb-2 text-lg"></i><p>No results found</p></div>';
+        } else {
+            html += `<a href="/shop?search=${encodeURIComponent(query)}" class="block px-4 py-3 text-center text-primary text-sm font-medium hover:bg-blue-50 border-t">See all results for "${query}"</a>`;
+        }
+
+        container.innerHTML = html;
+        container.classList.remove('hidden');
+    }
+
+    function highlightMatch(text, query) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<span class="font-semibold text-primary">$1</span>');
+    }
+
+    // Initialize search on both desktop and mobile
+    document.addEventListener('DOMContentLoaded', function() {
+        initSearch('desktopSearchInput', 'desktopSearchSuggestions');
+        initSearch('mobileSearchInput', 'mobileSearchSuggestions');
+    });
+
+    // Hide Preloader when page is fully loaded
+    window.addEventListener('load', function() {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+            }, 500);
+        }
+    });
     </script>
 
     @stack('scripts')

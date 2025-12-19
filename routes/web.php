@@ -25,6 +25,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/category/{slug}', [ShopController::class, 'category'])->name('shop.category');
+Route::get('/search/suggestions', [ShopController::class, 'searchSuggestions'])->name('search.suggestions');
 
 // Static Pages
 Route::get('/contact', [PageController::class, 'contact'])->name('pages.contact');
@@ -114,10 +115,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::patch('/contacts/{contact}/status', [AdminContactController::class, 'updateStatus'])->name('contacts.status');
     Route::delete('/contacts/{contact}', [AdminContactController::class, 'destroy'])->name('contacts.destroy');
 
-    // Careers
-    Route::resource('careers', AdminCareerController::class)->except(['show']);
+    // Careers - Applications routes MUST come before resource routes
     Route::get('/careers/applications', [AdminCareerController::class, 'applications'])->name('careers.applications');
     Route::get('/careers/applications/{application}', [AdminCareerController::class, 'showApplication'])->name('careers.applications.show');
     Route::patch('/careers/applications/{application}/status', [AdminCareerController::class, 'updateApplicationStatus'])->name('careers.applications.status');
     Route::delete('/careers/applications/{application}', [AdminCareerController::class, 'destroyApplication'])->name('careers.applications.destroy');
+    Route::resource('careers', AdminCareerController::class)->except(['show']);
 });
