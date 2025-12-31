@@ -64,11 +64,11 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-gray-500 text-sm">Revenue</p>
-                <p class="text-2xl font-bold text-emerald-600">₹{{ number_format($stats['total_revenue']) }}</p>
+                <p class="text-1xl font-bold text-emerald-600">₹{{ number_format($stats['total_revenue']) }}</p>
             </div>
-            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+            {{-- <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
                 <i class="fas fa-rupee-sign text-emerald-500 text-xl"></i>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="theme-color" content="#2874f0">
+    <meta name="theme-color" content="#286bbcff">
     <title>@yield('title', 'E-Shop - Online Shopping')</title>
     
     <!-- Google Fonts - Inter (Professional E-commerce Font) -->
@@ -21,7 +21,7 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#2874f0',
+                        primary: '#286bbcff',
                         secondary: '#fb641b',
                         dark: '#212121',
                     },
@@ -66,7 +66,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #2874f0 0%, #1a5dc8 100%);
+            background: linear-gradient(135deg, #286bbcff 0%, #1a5dc8 100%);
             z-index: 9999;
             display: flex;
             align-items: center;
